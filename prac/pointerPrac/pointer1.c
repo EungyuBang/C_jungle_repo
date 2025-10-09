@@ -13,8 +13,9 @@ int main() {
   printf("&num = %p\n", (void*)&num); // num 변수가 저장되어있는 주소값 출력
   printf("p = %p\n", (void*)p); // num의 주소값 p에 저장했으니까 위랑 결과가 같음
   printf("*p = %d\n", *p); // p 주소값에 저장된 값 가져옴
+	printf("&p = %p\n", (void*)&p); // p의 주소값 가져옴
 
-  *p = 20;
-  printf("num (after *p = 20) = %d\n", num);
+  // *p = 20;
+  // printf("num (after *p = 20) = %d\n", num);
   return 0 ;
 }

@@ -100,11 +100,67 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것? - 두 개의 연결 리스트를 번갈아가면서 합치는 것
+	ll1 , ll2 의 노드를 순서대로 번갈아가면서 연결
+	남은 노드가 있는 리스트가 있으면 그 뒤에 붙임
+	ll2는 마지막에 빈 리스트가 되도록 처리
+	기존 노드 재사용, 새로운 노드 생성 필요 없음
+*/
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+  // 1. 초기 예외 처리: ll1이 비어있는 경우 (ll2의 모든 노드를 ll1로 옮김)
+  if (ll1 -> head == NULL) {
+    ll1 -> head = ll2 -> head ;  // ll1의 head를 ll2의 head로 설정 (노드 이동)
+    ll1 -> size = ll2 -> size ;  // ll1의 size를 ll2의 size로 업데이트
+    ll2 -> head = NULL;          // ll2의 head를 NULL로 설정하여 ll2를 빈 리스트로 만듦
+    ll2 -> size = 0;             // ll2의 size를 0으로 설정
+    return;                      // 함수 종료
+  }
+  // 2. 초기 예외 처리: ll2가 비어있는 경우
+  if (ll2 -> head == NULL) {
+    return;                      // 병합할 것이 없으므로 함수 종료
+  }
+  // 3. 순회 포인터 설정 (ll1의 head를 보호하기 위해 cur1 사용)
+  ListNode *cur1 = ll1 -> head;
+  // 4. 병합 루프: cur1(ll1 노드)과 ll2->head(ll2 노드) 모두 노드가 있을 때만 반복
+  while(cur1 != NULL && ll2 -> head != NULL) {
+    // 다음 노드 주소 저장 (포인터 재연결 전에 백업하여 연결 끊김 방지)
+    ListNode *ll1nextNode = cur1 -> next;    // ll1의 다음 노드 주소 백업
+    ListNode *ll2nextNode = ll2 -> head -> next; // ll2의 다음 노드 주소 백업
+    // 노드 연결 1단계: cur1 -> ll2.head 연결
+    cur1 -> next = ll2 -> head;      // ll1의 현재 노드(cur1) 뒤에 ll2의 현재 head 노드를 연결
+    // 노드 연결 2단계: ll2.head -> ll1의 다음 노드 연결
+    cur1 -> next -> next = ll1nextNode; // 방금 연결된 ll2 노드(cur1->next) 뒤에 ll1의 원래 다음 노드(ll1nextNode)를 연결
+    // 포인터 이동 1단계: ll2 노드 소모
+    ll2 -> head = ll2nextNode;       // ll2의 head를 다음 노드로 이동 (현재 노드는 ll1로 넘어갔으므로)
+    // 포인터 이동 2단계: cur1 건너뛰어 이동
+    cur1 = ll1nextNode;              // cur1을 ll1의 원래 다음 노드로 이동 (ll2 노드를 건너뜀)
+    // 리스트 크기 업데이트 (ll2의 노드 1개가 ll1로 이동)
+    ll1 -> size++;                   // ll1의 크기 1 증가
+    ll2 -> size--;                   // ll2의 크기 1 감소
+  }
 }
+
+// void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
+// {
+// 	/* add your code here */
+// 	ListNode *cur1 = ll1 -> head;
+
+// 	while(cur1 != NULL && ll2->head != NULL) {
+// 		ListNode *nextNode = cur1->next;
+// 		ListNode *nextNode2 = ll2->head->next;
+// 		cur1->next = ll2->head;
+// 		cur1->next->next = nextNode;
+
+// 		ll2->head = nextNode2;
+// 		cur1 = nextNode;
+
+// 		ll1 -> size++;
+//		ll2 -> size--;
+// 	}
+// }
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

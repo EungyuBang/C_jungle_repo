@@ -83,10 +83,54 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 3번이랑 반대
 void moveEvenItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	ListNode *oddHead = NULL;
+	ListNode *oddTail = NULL;
+	ListNode *evenHead = NULL;
+	ListNode *evenTail = NULL;
+
+	ListNode *current = ll -> head;
+	while (current != NULL) {
+		// 순회 포인터 current가 가리키는 노드 A가 있다면 노드 A의 next 필드에 저장된 노드 B의 주소를 nextNode 에 복사해라.
+		ListNode *nextNode = current -> next;
+		current -> next = NULL;
+
+		// ll -> head -> item 이 홀수일때
+		if(current -> item % 2 != 0) {
+			// oddHead가 비어있을때
+			if(oddHead == NULL) {
+				oddHead = current;
+				oddTail = current;
+			} // oddHead가 비어있지 않을 때 
+			else {
+				oddTail -> next = current;
+				oddTail = current;
+			}
+		}
+		// 짝수일때
+		else {
+			if (evenHead == NULL) {
+				evenHead = current;
+				evenTail = current;
+			}
+			else {
+				evenTail -> next = current;
+				evenTail = current;
+			}
+		}
+		current = nextNode;
+	}
+	if(oddHead != NULL) {
+		ll -> head = oddHead;
+		if (evenHead != NULL) {
+			oddTail -> next = evenHead;
+		}
+	} else {
+		ll -> head = evenHead;
+	} 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

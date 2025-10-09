@@ -84,10 +84,34 @@ int main()
 }
 
 ////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것 
+	리스트 입력 받고 마지막에 거꾸로 출력
+*/
+/*
+	문제 로직 생각
+	노드를 받아
+	각 노드의 포인터의 방향을 거꾸로 바꿔버려 그럼 된다 아님?
+	여기선 재귀를 쓰길 바라니깐
+	재귀로 마지막 노드까지 내려감 -> 역순으로 포인터 뒤집어 -> 헤드 포인터를 마지막 노드로 바꿔
+*/
 void RecursiveReverse(ListNode **ptrHead)
 {
 	/* add your code here */
+	// 비어있는 경우 , 노드가 하나만 있는 경우
+	if (*ptrHead == NULL || (*ptrHead) -> next == NULL) {
+		return;
+	}
+
+	ListNode *rest = (*ptrHead) -> next;
+	RecursiveReverse(&rest);
+
+	// 현재 노드를 뒤에 붙임
+  (*ptrHead)->next->next = *ptrHead;
+  (*ptrHead)->next = NULL;
+
+  // 새 헤드로 갱신
+  *ptrHead = rest;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

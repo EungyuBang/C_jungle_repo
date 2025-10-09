@@ -83,10 +83,62 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 리스트를 순회하면서 홀수를 뒤로 보내고, 짝수는 앞으로 배치해서 리스트를 재구성
+/*
+	로직 
+	리스트 순회하면서 짝수 따로 연결, 홀수 따로 연결 -> 이후 짝수, 홀수 비어있는지 여부에 따라 짝수 tail 이랑 홀수 head랑 연결 (짝수가 비어있다 -> 들어온게 다 홀수다 , 홀수는 반대)	
+*/
 void moveOddItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	ListNode *evenHead = NULL;
+	ListNode *evenTail = NULL;
+	ListNode *oddHead = NULL;
+	ListNode *oddTail = NULL;
+
+	ListNode *current = ll -> head ;
+	while(current != NULL) {
+		ListNode *nextNode = current -> next; // 다음 노드를 미리 기억
+		current -> next = NULL; // 현재 노드 기존 연결 완전히 끊기  
+
+		if (current-> item % 2 == 0) {
+			// 짝수
+			if (evenHead == NULL) {
+				// 처음 들어가는 경우
+				evenHead = current;
+				evenTail = current;
+			} // 이미 있는 경우 뒤에 붙여줘야 함
+			else {
+				evenTail->next = current;
+				evenTail = current;
+			}
+		}
+		// 홀수
+		else {
+			// 처음 들어가는 경우
+			if(oddHead == NULL) {
+				oddHead = current;
+				oddTail = current;
+				// 이미 있는 경우 뒤에 붙여줘야 함
+			} else {
+				oddTail -> next = current;
+				oddTail = current;
+			}
+		}
+		// 업데이트 
+		current = nextNode; 
+	}
+	if (evenHead != NULL) {
+		// 짝수 그룹이 비어있지 않은 경우 짝수 그룹부터 출력해야 하니까 head - evenhead
+		ll -> head = evenHead;
+		// 짝수 그룹이 비어있지 않고 홀수 그룹이 비어있지 않는 경우 evenTail, oddHead 연결
+		if (oddHead != NULL) {
+			evenTail -> next = oddHead;
+		}
+	}// 짝수 그룹이 비어있는 경우
+	else {
+		ll -> head = oddHead;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

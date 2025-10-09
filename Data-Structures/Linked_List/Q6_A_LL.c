@@ -85,10 +85,52 @@ int main()
 }
 
 ////////////////////////////////////////////////////////////////////////
-
+// 리스트를 순회하면서 가장 큰 값 배열 제일 앞으로 보내야 함 -> 리스트 한 번만 순회 가능, 노드 자체를 이동해야함.
+// 그러면 리스트가 비었거나, 제일 앞에 이미 가장 큰 노드가 와있을 때 처리 해줘야함
+/*
+	로직 생각
+	리스트가 비었으면 종료
+	순회하면서 maxNode , preMax 저장
+	맨 앞에 와있으면 그냥 출력하면 되는거 아님?
+	맨 앞 아니면 최대값 노드 떼서 맨 앞에 위치.
+*/ 
+/*
+	**ptrHead - 포인터를 가리키는 포인터 , ptrhead 는 head 포인터 자체를 가리킴 , *ptrHead = head
+	ptrHead -> [10] -> [20] -> [30] -> NULL
+	*ptrHead = [10] (첫 노드)
+	(*ptrHead)->next = [20] (두 번째 노드)
+	cur = [20]
+*/
 int moveMaxToFront(ListNode **ptrHead)
 {
     /* add your code here */
+		// 비어있을 때
+		if (*ptrHead == NULL) {
+			return 0;
+		}
+		ListNode *maxNode = *ptrHead;
+		ListNode *prevMax = NULL;
+		ListNode *prev = *ptrHead;
+		ListNode *cur = (*ptrHead) -> next;
+		
+		while (cur != NULL) {
+			// 현재의 값이 다음의 값보다 작으면
+			if (maxNode->item < cur->item) {
+				maxNode	= cur	;
+				prevMax = prev ;
+			}
+			prev = cur;
+			cur = cur -> next;
+		}
+		// 최대값이 헤드에 있을때
+		if (maxNode == *ptrHead) {
+			return 0;
+		}
+		// 이제 가장 큰 값 헤드로 옮겨주면 됨
+		prevMax->next = maxNode -> next ;
+		maxNode->next = *ptrHead;
+		*ptrHead = maxNode;
+		return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
