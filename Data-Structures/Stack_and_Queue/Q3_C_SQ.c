@@ -24,7 +24,7 @@ typedef struct _linkedlist{
 } LinkedList;
 
 ////////////////////////////////// stack //////////////////////////////////////////
-
+// 핵심: 스택의 유일한 멤버가 바로 LinkedList ll; - 이것은 스택의 모든 데이터와 관리 기능을 내부적으로 LinkedList 구조체를 통해 처리하겠다는 의미
 typedef struct stack{
 	LinkedList ll;
 } Stack;
@@ -100,11 +100,79 @@ int main()
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것
+	스택의 숫자들이 쌍으로 연속적인지 확인하는 C 함수 작성
+	예시: (16, 15, 11, 10, 5, 4)는 쌍으로 연속적, (16, 15, 11, 10, 5, 1)은 연속적이지 않음.
+*/
+/*
+	문제 로직 생각
+	우선 스택의 크기가 홀수면 절대 안됨 -> return -1
+	스택의 크기가 짝수일떄 시작 -> 2개씩 pop하면서 비교 - 쌍 맞으면 return 0 아니면 return -1 - 근데 pop 하면 값이 사라져버리니깐 보조 스택 만들어서 거기다가 push
+	그래서 다 return 0 이면 된거 아님?
+*/
 int isStackPairwiseConsecutive(Stack *s)
 {
   /* add your code here */
+	int size = s -> ll.size;
+	if (size % 2 == 1) return 0 ; // size가 홀수면 실패
+	// 보조스택 선언
+	Stack temp;
+	temp.ll.head = NULL;
+	temp.ll.tail = NULL;
+	temp.ll.size = 0 ;
+	// 두개 비교하기 위해서 first, second 선언
+	int first, second;
+	// 반복문 시작 s 가 비지 않을때까지
+	while(!isEmptyStack(s)) {
+		first = pop(s);
+		second = pop(s);
+		// first, second 차이가 1이면 조건 만족 -> 보조스택에 push
+		if (abs(first-second) == 1) {
+			push(&temp, second);
+			push(&temp, first);
+		}
+		else {
+			return 0;
+		}
+	}
+	// 보조 스택에 있던 값들 원래 스택에 push
+	while (!isEmptyStack(&temp)) {
+		push(s, pop(&temp));
+	}
+	return 1;
 }
+// 위의 내 코드대로 하면 논리적으로는 맞음 근데 구현적으로 불안정
+// 아래는 gpt 코드
+// int isStackPairwiseConsecutive(Stack *s)
+// {
+//     if (s->ll.size % 2 == 1)
+//         return 0;
+
+//     Stack temp = {0};
+//     int first, second;
+//     int isConsecutive = 1;
+
+//     while (!isEmptyStack(s)) {
+//         first = pop(s);
+//         if (isEmptyStack(s)) {
+//             push(&temp, first);
+//             break;
+//         }
+//         second = pop(s);
+
+//         if (abs(first - second) != 1)
+//             isConsecutive = 0;
+
+//         push(&temp, second);
+//         push(&temp, first);
+//     }
+
+//     while (!isEmptyStack(&temp))
+//         push(s, pop(&temp));
+
+//     return isConsecutive;
+// }
 
 //////////////////////////////////////////////////////////////////////////////////
 

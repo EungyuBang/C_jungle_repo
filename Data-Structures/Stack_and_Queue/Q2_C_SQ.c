@@ -110,10 +110,24 @@ int main()
 
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것
+	링크드 리스트에서 노드 하나씩 스택에 넣기 ex) ll에서 1 3 5 7 9 -> stack 에 들어가는건 1 3 5 7 9 들어가고 나오는순서가 9 7 5 3 1 이렇게 나오게 
+*/ 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
     /* add your code here */
+		// 스택이 비어있지 않다면 먼저 비우고 시작
+		while (!isEmptyStack(s)) {
+			pop(s);
+		}
+		// 연결 리스트 헤드부터 순회 시작
+		ListNode *temp = ll -> head;
+		while (temp != NULL) {
+			// s 에 현재 head -> item 을 push
+			push(s, temp -> item);
+			temp = temp ->next;
+		}
 }
 
 void removeEvenValues(Stack *s)

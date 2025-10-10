@@ -113,16 +113,35 @@ int main()
 
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*	
+	문제에서 원하는 것
+	ll 의 정수들을 순서대로 큐에 인큐해서 새 큐 만들기
+	큐에 기존 데이터 있다면 함수 시작 시 큐 비워야함
+	리스트의 첫 노드부터 큐에 들어감
+*/
+/*
+	로직 생각
+	ll 순회 하면서 값을 하나씩 큐에 넣으면(인큐) 되지 않을까? -> 그러려면 다음 연결 생각
+*/
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
 	/* add your code here */
+	while (!isEmptyQueue(q)) {
+		dequeue(q);
+	}
+
+	ListNode *llhead = ll -> head;
+	while (llhead != NULL) {
+		enqueue(q, llhead -> item);
+		llhead = llhead -> next;
+	}
 }
 
-void removeOddValues(Queue *q)
-{
-	/* add your code here */
-}
+// 이거 왜 있는거임??
+// void removeOddValues(Queue *q)
+// {
+// 	/* add your code here */
+// }
 
 //////////////////////////////////////////////////////////////////////////////////
 

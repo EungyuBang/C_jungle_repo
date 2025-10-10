@@ -98,7 +98,7 @@ int main()
 	**ptrHead - 포인터를 가리키는 포인터 , ptrhead 는 head 포인터 자체를 가리킴 , *ptrHead = head
 	ptrHead -> [10] -> [20] -> [30] -> NULL
 	*ptrHead = [10] (첫 노드)
-	(*ptrHead)->next = [20] (두 번째 노드)
+	(*ptrHead) -> next = [20] (두 번째 노드)
 	cur = [20]
 */
 int moveMaxToFront(ListNode **ptrHead)
@@ -130,7 +130,7 @@ int moveMaxToFront(ListNode **ptrHead)
 		prevMax->next = maxNode -> next ; // maxNode 제일 앞으로 옮길거니깐 prevMax -> next 랑 maxNode -> next 연결 시켜주고 
 		maxNode->next = *ptrHead; // maxNode 가 헤드 될거니까 maxNode -> next 가 현재 head 값
 		*ptrHead = maxNode; // 마지막으로 현재 헤드가 maxNode
-		return 1;
+		return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

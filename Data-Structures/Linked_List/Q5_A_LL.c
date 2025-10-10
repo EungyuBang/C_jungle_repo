@@ -108,77 +108,74 @@ int main()
 		그래서 resultFrontList, resultBackList 에 넣으면 되지 않을까?
 */
 // 메모리 관리 측면에서 문제가 생긴다는데... double free?? 
-// void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
-// {
-// 	/* add your code here */
-// 	if (ll -> size == 0)  {
-// 		resultFrontList -> head = NULL;
-// 		resultFrontList -> size = 0;
-// 		resultBackList -> head = NULL;
-// 		resultBackList -> size = 0 ;
-// 		return;
-// 	}
-// 	int mid = (ll -> size + 1) / 2 ;
-// 	ListNode *midNode = findNode(ll, mid - 1);
-// // frontList 설정
-// 	resultFrontList -> head = ll -> head;
-// 	resultFrontList -> size = mid;
-// // backList 설정
-// 	resultBackList -> head = midNode -> next;
-// 	resultBackList -> size = ll -> size - mid;
-
-// 	if (midNode != NULL)
-//     resultBackList->head = midNode->next;
-// 	else
-//     resultBackList->head = NULL;
-// }
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-  // 1. 초기화 (Double Free 방지를 위해 입력 리스트의 헤드를 NULL로 설정)
-  resultFrontList->head = NULL;
-  resultFrontList->size = 0;
-  resultBackList->head = NULL;
-  resultBackList->size = 0;
+	/* add your code here */
+	if (ll -> size == 0)  {
+		resultFrontList -> head = NULL;
+		resultFrontList -> size = 0;
+		resultBackList -> head = NULL;
+		resultBackList -> size = 0 ;
+		return;
+	}
+	int mid = (ll -> size + 1) / 2 ;
+	ListNode *midNode = findNode(ll, mid - 1);
+// frontList 설정
+	resultFrontList -> head = ll -> head;
+	resultFrontList -> size = mid;
+// backList 설정
+	resultBackList -> head = midNode -> next;
+	resultBackList -> size = ll -> size - mid;
 
-  // 2. 빈 리스트 처리
-  if (ll->head == NULL) {
-    // 이미 위의 초기화로 처리되었으나, 명시적 반환
-    ll->size = 0; // ll의 size도 0으로 명시적으로 설정
-    return;
-  }
+	if (midNode != NULL)
+    resultBackList->head = midNode->next;
+	else
+    resultBackList->head = NULL;
+}
+// void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
+// {
+//   // 1. 초기화 (Double Free 방지를 위해 입력 리스트의 헤드를 NULL로 설정)
+//   resultFrontList->head = NULL;
+//   resultFrontList->size = 0;
+//   resultBackList->head = NULL;
+//   resultBackList->size = 0;
 
-  // 3. 분할점 계산: 홀수일 때 앞부분에 하나 더 포함
-  int mid = (ll->size + 1) / 2;
+//   // 2. 빈 리스트 처리
+//   if (ll->head == NULL) {
+//     // 이미 위의 초기화로 처리되었으나, 명시적 반환
+//     ll->size = 0; // ll의 size도 0으로 명시적으로 설정
+//     return;
+//   }
+
+//   // 3. 분할점 계산: 홀수일 때 앞부분에 하나 더 포함
+//   int mid = (ll-> size + 1) / 2;
   
-  // 4. mid-1 인덱스 노드 (프론트 리스트의 꼬리 노드) 찾기
-  // findNode 함수가 index-1까지 순회해주므로, index = mid - 1 이 맞습니다.
-  ListNode *frontTail = findNode(ll, mid - 1);
+//   // 4. mid-1 인덱스 노드 (프론트 리스트의 꼬리 노드) 찾기
+//   // findNode 함수가 index-1까지 순회해주므로, index = mid - 1 이 맞습니다.
+//   ListNode *frontTail = findNode(ll, mid - 1);
   
-  // 5. 백 리스트의 머리 (frontTail의 다음 노드)
-  ListNode *backHead = NULL;
+//   // 5. 백 리스트의 머리 (frontTail의 다음 노드)
+//   ListNode *backHead = NULL;
   
-  // 6. 연결 끊기 및 포인터 재설정 (가장 중요한 부분)
-  if (frontTail != NULL) {
-    backHead = frontTail->next; // 백 리스트의 시작 노드를 가져옴
-    
-    // ⭐⭐ 핵심: 프론트 리스트의 꼬리를 NULL로 설정하여 ll에서 분리 ⭐⭐
-    frontTail->next = NULL; 
-  }
+//   // 6. 연결 끊기 및 포인터 재설정 (가장 중요한 부분)
+//   if (frontTail != NULL) {
+//     backHead = frontTail->next; // 백 리스트의 시작 노드를 가져옴
+//     // ⭐⭐ 핵심: 프론트 리스트의 꼬리를 NULL로 설정하여 ll에서 분리 ⭐⭐
+//     frontTail->next = NULL; 
+//   }
   
   // 7. 결과 리스트에 최종 할당
-  
   // resultFrontList 설정
-  resultFrontList->head = ll->head;
-  resultFrontList->size = mid;
+//   resultFrontList->head = ll->head;
+//   resultFrontList->size = mid;
+//   // resultBackList 설정
+//   resultBackList->head = backHead;
+//   resultBackList->size = ll->size - mid;
 
-  // resultBackList 설정
-  resultBackList->head = backHead;
-  resultBackList->size = ll->size - mid;
-
-  // 8. 원본 ll 리스트 초기화 (노드 소유권을 resultFrontList와 resultBackList에 넘김)
-  ll->head = NULL;
-  ll->size = 0;
-}
+//   // 8. 원본 ll 리스트 초기화 (노드 소유권을 resultFrontList와 resultBackList에 넘김)
+//   ll->head = NULL;
+//   ll->size = 0;
+// }
 
 
 ///////////////////////////////////////////////////////////////////////////////////

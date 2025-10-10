@@ -109,10 +109,37 @@ int main()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것
+	스택을 사용해서 큐를 역순으로 만드는 C 함수를 작성하는 것
+	스택은 push, pop만 큐에서는 enqueue, dequeue 만 사용
+	예시: 큐가 (1, 2, 3, 4, 5)인 경우, 결과 큐는 (5, 4, 3, 2, 1)이 됨.
+*/
+/*
+	로직 생각
+	1. 스택 초기화
+	2. 큐에 1 2 3 4 5 있으면 dequeue 하고 스택에 순서대로 push 
+	3. 그럼 스택에 1 2 3 4 5 들어옴 -> 이걸 다시 스택 특성 이용해서 pop 하고 큐에 enqueue
+	4. 그럼 큐에 5 4 3 2 1 들어옴
+	5. 큐 특성 이용해서 그대로 출력
+*/
 void reverse(Queue *q)
 {
 /* add your code here */
+	// 스택 만들어주고
+	Stack stack;
+	// 초기화
+	stack.ll.head = NULL;
+	stack.ll.tail = NULL;
+	stack.ll.size = 0 ;
+	// stack에 queue를 dequeue 한거 push -> 그럼 지금 스택에 들어와 있음
+	while (!isEmptyQueue(q)) {
+		push(&stack, dequeue(q));
+	}
+	// 스택에 들어와있는거 다시 큐에 inqueue
+	while (!isEmptyStack(&stack)) {
+		enqueue(q, pop(&stack));
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

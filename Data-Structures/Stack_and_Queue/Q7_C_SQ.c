@@ -85,9 +85,9 @@ int main()
 			break;
         case 2:
             if(balanced(str))
-                printf("not balanced!\n");
-            else
                 printf("balanced!\n");
+            else
+                printf("not balanced!!\n");
 			break;
 		case 0:
 			break;
@@ -102,9 +102,49 @@ int main()
 }
 
 ////////////////////////////////////////////////////////////
+/*
+	문제에서 원하는거 
+	입력 문자열 expression에 포함된 모든 괄호 (( ) [ ] { })가 올바른 순서와 수량으로 짝을 이루는지 판단.
+	반환값: 균형이 맞으면 1 (참), 맞지 않으면 0 (거짓)을 반환.
+*/
+/*
+	문제 로직 생각
+	백준 9012 문제랑 로직은 같다.
+	(, [, { 일때 stack에 push하고 ) ] } 일때 pop -> 그래서 stack 의 크기가 0이면 1 , !=0 이면 0
+*/
 int balanced(char *expression)
 {
-/* add your code here */
+	/* add your code here */
+	Stack s ;
+	s.ll.head = NULL ; 
+	s.ll.size = 0 ;	
+
+	for (int i = 0; expression[i] != '\0'; i++) {
+		char current_char = expression[i] ;
+
+		if (current_char == '(' || current_char == '[' || current_char == '{') {
+			push(&s, current_char);
+		}
+		else if (current_char == ')' || current_char == ']' || current_char == '}') {
+			if (isEmptyStack(&s)) {
+				return 0;
+			}
+			char top_char = peek(&s) ;
+			
+			if ((current_char == ')' && top_char == '(') ||
+          (current_char == ']' && top_char == '[') ||
+          (current_char == '}' && top_char == '{')) {
+          pop(&s);
+      } else {
+        	return 0; 
+      }
+		}
+	}
+	if (isEmptyStack(&s) == 1) {
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 ////////////////////////////////////////////////////////////
