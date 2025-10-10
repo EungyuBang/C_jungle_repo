@@ -108,10 +108,10 @@ int moveMaxToFront(ListNode **ptrHead)
 		if (*ptrHead == NULL) {
 			return 0;
 		}
-		ListNode *maxNode = *ptrHead;
-		ListNode *prevMax = NULL;
-		ListNode *prev = *ptrHead;
-		ListNode *cur = (*ptrHead) -> next;
+		ListNode *maxNode = *ptrHead; // 현재까지 maxNode = head
+		ListNode *prevMax = NULL; // head에 maxNode 있으니까 maxNode 이전값 NULL 로 초기화
+		ListNode *prev = *ptrHead; // 순회 중 현재 노드의 이전 값
+		ListNode *cur = (*ptrHead) -> next; // cur에 head의 next 주소값 넣어줘서 순회 준비
 		
 		while (cur != NULL) {
 			// 현재의 값이 다음의 값보다 작으면
@@ -127,9 +127,9 @@ int moveMaxToFront(ListNode **ptrHead)
 			return 0;
 		}
 		// 이제 가장 큰 값 헤드로 옮겨주면 됨
-		prevMax->next = maxNode -> next ;
-		maxNode->next = *ptrHead;
-		*ptrHead = maxNode;
+		prevMax->next = maxNode -> next ; // maxNode 제일 앞으로 옮길거니깐 prevMax -> next 랑 maxNode -> next 연결 시켜주고 
+		maxNode->next = *ptrHead; // maxNode 가 헤드 될거니까 maxNode -> next 가 현재 head 값
+		*ptrHead = maxNode; // 마지막으로 현재 헤드가 maxNode
 		return 1;
 }
 

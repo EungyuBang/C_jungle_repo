@@ -99,6 +99,7 @@ void RecursiveReverse(ListNode **ptrHead)
 {
 	/* add your code here */
 	// 비어있는 경우 , 노드가 하나만 있는 경우
+	//									여기만 괄호 들어가는 이유 *ptrHead -> next 하면 '->' 이게 '*' 보다 우선순위가 높아서 먼저 넘어가버림
 	if (*ptrHead == NULL || (*ptrHead) -> next == NULL) {
 		return;
 	}
@@ -107,9 +108,12 @@ void RecursiveReverse(ListNode **ptrHead)
 	RecursiveReverse(&rest);
 
 	// 현재 노드를 뒤에 붙임
+	// *ptrHead = Node4라면
+	// Node4 -> next -> next = Node4
+	// Node5 -> next = Node4   -   역방향 연결됨
   (*ptrHead)->next->next = *ptrHead;
+	// 지금 아래는 그러면 Node5 -> Node4 -> NULL
   (*ptrHead)->next = NULL;
-
   // 새 헤드로 갱신
   *ptrHead = rest;
 }
