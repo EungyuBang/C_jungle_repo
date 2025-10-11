@@ -93,11 +93,27 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+    문제에서 원하는 것 
+    이진트리의 최대 높이 구하기 -> 최대 높이일때 노드 수를 구하는게 아니라 링크 수를 구하면 됨 (노드가 3개 연결되어있으면 간선은 2개)
+*/
+/*
+    문제 로직 생각
+    1. 우선 비어있는 트리 처리해주고
+    2. 재귀적으로 돌면서 가장 높은 크기에서 노드 수 구해서 -1 해주면 되는거 아닌가?
+*/
 int maxHeight(BTNode *node)
-
 {
     /* add your code here */
+    // 비어있을때 처리
+    if (node == NULL) {
+        return -1;
+    }
+    // 재귀적으로 좌우 서브트리중 가장 큰 높이 구하기
+    int leftMaxHeight = maxHeight(node -> left);
+    int rightMaxHeight = maxHeight(node -> right);
+    // 좌 우 서브트리 가장 큰 값 들어왔으니까 둘이 비교 해서 더 큰 값에 + 1
+    return (leftMaxHeight > rightMaxHeight ? leftMaxHeight : rightMaxHeight) + 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

@@ -99,11 +99,28 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+    문제에서 원하는 것
+    이진 트리 안의 모든 홀수 노드의 합 구하기 
+*/
+/*
+    로직 생각
+    1. 트리 비어있으면 0 반환
+    2. if (node -> left % 2 == 1) , if(node -> right % 2 == 1) 이면 더해야함 - oddSums 만들어서 oddSums += node -> left node -> right 해줘야 할 것 같은데
+*/
 int sumOfOddNodes(BTNode *node)
 
 {
     /* add your code here */
+    if (node == NULL) return 0;
+
+    int oddSums = 0;
+
+    if (node->item % 2 != 0) {
+        oddSums += node -> item;
+    } 
+    
+    return oddSums + sumOfOddNodes(node -> left) + sumOfOddNodes(node -> right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

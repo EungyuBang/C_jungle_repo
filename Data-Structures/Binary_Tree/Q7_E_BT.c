@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 7 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -99,10 +100,33 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+    문제에서 원하는 것
+    이진트리에서 가장 작은 값을 찾아서 반환하는 함수 작성
+*/
+/*
+    문제 로직 생각
+    돌면서 최솟값 갱신하면 되지 않을까?
+    아니면 왼쪽에서 최솟값 찾고 오른쪽에서 최솟값 찾아서 비교?
+*/
 int smallestValue(BTNode *node)
 {
 	/* add your code here */
+    // return 0; 하면 노드의 최솟값이 0으로 되어버려서 오류 발생 -> 그래서 #include <limits.h> 사용해서 INT_MAX 이용
+    if(node == NULL) return INT_MAX;
+    // 재귀적으로 왼쪽, 오른쪽 중에서의 최솟값 찾음
+    int leftMin = smallestValue(node -> left);
+    int rightMin = smallestValue(node -> right);
+    // 현재의 값도 비교해줘야 하니까 nowMin 만들어주고 
+    int nowMin = node -> item;
+    // 비교
+    if(leftMin < nowMin) {
+        nowMin = leftMin;
+    }
+    if(rightMin < nowMin) {
+        nowMin = rightMin; 
+    }
+    return nowMin;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

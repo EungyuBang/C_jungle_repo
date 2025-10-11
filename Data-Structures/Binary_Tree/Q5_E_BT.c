@@ -102,10 +102,27 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+    문제에서 원하는 것
+    이진 트리를 좌우 반전 시키는 함수 작성
+*/
+/*
+    문제 로직 생각
+    1. 빈 트리면 0 반환 해야겠지?]
+    2. 그냥 node -> left 를 다 node -> right로 바꾸고 , node -> right를 node -> left 로 바꿔주면 되는 거 아닌가? -> 이게 swap
+*/
 void mirrorTree(BTNode *node)
 {
 	/* add your code here */
+    if (node == NULL) return;
+    // 처음에 바꿔줄 공간을 int로 선언하니까 타입이 잘못됐다는 오류 났었음 -> 그래서 도움을 받아보니 BTNode 로 타입을 맞춰줘야 함
+    BTNode *area ;
+    area = node -> left;
+    node -> left = node -> right;
+    node -> right = area;
+
+    mirrorTree(node -> left);
+    mirrorTree(node -> right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

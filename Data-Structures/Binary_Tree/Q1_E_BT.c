@@ -112,11 +112,30 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+/*
+   문제에서 원하는 것
+   1번 트리랑 2번 트리의 구조가 같은지 판단하고 같으면 return 1; 다르면 return 0;
+*/
+/*
+   음 그냥 반복문 돌리면서 value1, value2 만들고 '\0' 까지 같으면 return 1; 다르면 return 0; 이 맞지 않나? -> 이건 문자열(1차원) 비교 방식
 
+   트리의 구조는 노드의 좌우 자식 관계를 재귀적으로 비교해야함
+   1. tree1, tree2 다 비어있으면 return 1
+   2. 트리 두개중 한쪽은 비었는데 한쪽은 안 비어있으면 같을 수 없으니 return 0
+   3. 값 비교해서 같지 않으면 return 0;
+   4. 현재 노드가 동일하다면 왼쪽 서브트리와 오른쪽 서브트리가 모두 동일한지 재귀적으로 값 비교 
+*/
 int identical(BTNode *tree1, BTNode *tree2)
 
 {
    /* add your code here */
+   if (tree1 == NULL && tree2 == NULL) return 1; 
+   if (tree1 == NULL || tree2 == NULL) return 0;
+   if (tree1->item != tree2->item) return 0;
+    
+   return identical(tree1 -> left, tree2 -> left) && identical(tree1 -> right, tree2 -> right);
+ //return identical(tree1->left, tree2->left) * identical(tree1->right, tree2->right);
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////

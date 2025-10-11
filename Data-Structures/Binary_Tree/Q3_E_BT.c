@@ -97,11 +97,32 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+    문제에서 원하는 것
+    이진트리에서 자식이 딱 하나만 있는 노드의 개수를 세기
+*/
+/*
+    문제 로직 생각
+    1. 비어있을때 처리
+    2. node -> item -> left == NULL || node -> item -> right == NULL 이 참이면 음 하나만 있을때 또는 둘 다 있을때도 참이 되어버리네? 그럼 ^ 연산자 써야하나?
+    3. node -> left == NULL ^ node -> right == NULL 이렇게?  
+    4. 그래서 재귀로 처리해서 참이면 cnt ++ ? 
+*/
 int countOneChildNodes(BTNode *node)
 
 {
     /* add your code here */
+    // 트리가 비어있을때 처리 (종료 조건)
+    if (node == NULL) return 0;
+    // cnt 만들어주고
+    int cnt = 0;
+    // 트리가 비어있지 않을 때
+    // node의 left, right 가 둘 다 비어있고, 두개 다 있으면 안됨 -> 한쪽씩만 있어야함
+    // 그래서 ^ 연산자 사용 (둘다 참이거나 둘다 거짓이면 거짓 반환 -> 둘 중 하나만 참이어야 참 반환하는 연산자)
+    if ((node -> left == NULL) ^ (node -> right == NULL)) {
+        cnt ++;
+    }
+    return cnt + countOneChildNodes(node -> left) + countOneChildNodes(node -> right);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

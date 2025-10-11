@@ -99,10 +99,42 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+    문제에서 원하는 것
+    현재 노드 아래로 3단계 깊이까지 노드가 있으면 해당 노드 출력
+*/
+/*
+    문제 로직 생각
+    1. 우선 비어있으면 끝내야겠죠?
+    2. 재귀 돌아서 가장 깊게 있는 노드의 깊이가 3단계 안되면 끝내야겠죠? (간선이 3개)
+    3. 3단계가 되는 노드가 있으면 그때의 item을 출력해야겠죠? -> 각 노드의 최대 깊이를 계산
+*/
 int hasGreatGrandchild(BTNode *node)
 {
 	/* add your code here */
+    if(node == NULL) {
+        return -1;
+    }
+
+    int leftDepth = hasGreatGrandchild(node -> left);
+    int rightDepth = hasGreatGrandchild(node -> right);
+
+
+    // 3단계 되는 노드 있으면 출력
+    // if (leftDepth >= 3 || rightDepth >= 3) {
+    //     return leftDepth + 1 || rightDepth + 1 ;
+    // }
+    int curDepth ;
+    if (leftDepth > rightDepth) {
+        curDepth = leftDepth + 1;
+    } else {
+        curDepth = rightDepth + 1;
+    }
+
+    if (curDepth >= 3) {
+        printf("%d\n", node->item);
+    }
+    return curDepth;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
