@@ -102,6 +102,7 @@ int main()
     1. 우선 비어있는 트리 처리해주고
     2. 재귀적으로 돌면서 가장 높은 크기에서 노드 수 구해서 -1 해주면 되는거 아닌가?
 */
+// BTNode 구조체의 메모리 주소를 받아서 node라는 이름의 포인터 변수에 저장할게
 int maxHeight(BTNode *node)
 {
     /* add your code here */
@@ -113,7 +114,15 @@ int maxHeight(BTNode *node)
     int leftMaxHeight = maxHeight(node -> left);
     int rightMaxHeight = maxHeight(node -> right);
     // 좌 우 서브트리 가장 큰 값 들어왔으니까 둘이 비교 해서 더 큰 값에 + 1
-    return (leftMaxHeight > rightMaxHeight ? leftMaxHeight : rightMaxHeight) + 1;
+    if (leftMaxHeight > rightMaxHeight) {
+        return leftMaxHeight + 1;
+    } 
+    else {
+        return rightMaxHeight + 1;
+    }
+    // gpt    
+    // return (leftMaxHeight > rightMaxHeight ? leftMaxHeight : rightMaxHeight) + 1;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

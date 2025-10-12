@@ -116,7 +116,7 @@ int sumOfOddNodes(BTNode *node)
 
     int oddSums = 0;
 
-    if (node->item % 2 != 0) {
+    if (node->item % 2 != 0) { 
         oddSums += node -> item;
     } 
     
