@@ -88,10 +88,39 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+/*
+	문제에서 원하는 것
+	이진 탐색 트리를 전위순회 하여 값 출력 -> 스택하나만 쓰고 (루트 -> 왼쪽노드 -> 오른쪽 노드)
+*/
 
+/*
+	문제 로직 생각
+	1. 스택 만들고 - 초기화
+	2. 전위 순회... 루트 값 먼저 출력해야됨. -> 이때 루트에서 왼쪽 오른쪽 노드 중에서 오른쪽 먼저 스택에 넣어, 그리고 왼쪽
+	3. 왼쪽 노드 팝하고 출력하면서 왼쪽노드의 오른쪽 , 왼쪽 순으로 노드 또 넣고 뽑아 반복하면서 널 만나면 
+	4. 스택에 남아있던 루트 노드에 연결됐던 오른쪽 뽑고, 그때의 오른쪽 왼쪽 순으로 또 스택에 넣어 그리고 팝, 출력
+*/
 void preOrderIterative(BSTNode *root)
 {
 	 /* add your code here */
+	 Stack stack;
+	 stack.top = NULL;
+			 	
+	 if(root == NULL) return;
+	
+	 push(&stack, root);
+
+	 while(!isEmpty(&stack)) {
+		BSTNode *curNode = pop(&stack); // 이게 반복문안에 있어야 루트 지정이 계속 바뀜, 밖에서 선언하면 안됨
+		printf("%d ", curNode->item);
+
+		if (curNode -> right != NULL) {
+			push(&stack, curNode->right);
+		}
+		if (curNode -> left != NULL) {
+			push(&stack, curNode -> left);
+		}
+	 }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

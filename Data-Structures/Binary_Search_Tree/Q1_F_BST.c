@@ -90,11 +90,42 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것
+	이진트리를 루트부터 한 레벨씩 왼쪽에서 오른쪽으로 방문하여 값 출력
+	큐 사용해서 해야함 , enqueue, dequeue
+*/
+/*
+	문제 로직 생각
+	1. 큐 비어있지 않으면 초기화
+	2. 우선 루트 큐에 넣어 -> 그리고 루트 꺼내 -> 이때 왼쪽, 오른쪽 자식 노드 큐에 넣어
+	3. 이제 큐 특성대로 앞에서부터 꺼내 -> 이때 또 왼쪽 오른쪽 자식 있으면 큐에 넣어 
+	4. 반복 -> 근데 왼쪽 오른쪽 자식노드 없으면 조건 달아줘야할듯?
+*/
 void levelOrderTraversal(BSTNode* root)
 {
-
     /* add your code here */
+		if (root == NULL) return;
+		// 큐 만들고
+		Queue queue;
+		// 큐 초기화
+		queue.head = NULL ;
+		queue.tail = NULL ;
+
+		// 루트 큐에 넣고 시작
+		enqueue(&queue.head, &queue.tail, root);
+		// 루트 dequeue 하면서 왼쪽 오른쪽 노드 있으면 넣어주기
+		while (queue.head != NULL) {
+			BSTNode *dequeueNode = dequeue(&queue.head, &queue.tail);
+			printf("%d ", dequeueNode -> item) ;
+
+			if(dequeueNode -> left != NULL) {
+				enqueue(&queue.head , &queue.tail, dequeueNode -> left);
+			}
+			if(dequeueNode -> right != NULL) {
+				enqueue(&queue.head, &queue.tail, dequeueNode -> right);
+			}
+		}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

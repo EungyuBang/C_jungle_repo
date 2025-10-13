@@ -88,18 +88,51 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것
+	Q4 와 같이 후위순회 결과 출력 -> 근데 이번엔 스택을 두 개 씀, 왼쪽-> 오른쪽 ->루트
+*/
+/*
+	문제 로직 생각
+	스택을 두개 만들고, 초기화.
+	1. stack 1에서는 루트부터 시작. 루트를 팝하면서 stack 2 로 푸시 -> 하면서 왼쪽 오른쪽 노드 있으면 순서대로 stack 1에 저장
+	2. 제일 마지막 노드 계속 스택 2로 푸시 -> 이때 노드의 왼 오 있으면 스택 1에 계속 넣어줘야함.
+	3. 그래서 스택1이 비면 스택2로 이동 다 한거임
+	4. 스택 2 출력.
+*/
 void postOrderIterativeS2(BSTNode *root)
 {
 	 /* add your code here */
+	 Stack stackOne;
+	 Stack stackTwo;
+	 stackOne.top = NULL;
+	 stackTwo.top = NULL;
+
+	 if(root == NULL) return;
+	 push(&stackOne, root);
+
+	 while(!isEmpty(&stackOne)) {
+		BSTNode *st1CurNode = pop(&stackOne) ;
+		push(&stackTwo, st1CurNode);
+		if (st1CurNode -> left != NULL) {
+			push(&stackOne, st1CurNode -> left);
+		}
+		if (st1CurNode -> right != NULL) {
+			push(&stackOne, st1CurNode -> right);
+		}
+	 }
+	 while(!isEmpty(&stackTwo)) {
+		BSTNode *printfStackTwo = pop(&stackTwo);
+		printf("%d ", printfStackTwo -> item);
+	 }
 }
 
 /* Given a binary search tree and a key, this function
    deletes the key and returns the new root. Make recursive function. */
-BSTNode* removeNodeFromTree(BSTNode *root, int value)
-{
-	/* add your code here */
-}
+// BSTNode* removeNodeFromTree(BSTNode *root, int value)
+// {
+// 	/* add your code here */
+// }
 ///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){

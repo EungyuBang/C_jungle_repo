@@ -88,10 +88,81 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+/*
+	문제에서 원하는 것
+	트리 후위순회 -> 스택 하나만 써서
+*/
+/*
+	문제 로직 생각
+	1. 항상 하는 스택 만들고 초기화...
+	2. 우선 루트를 잡아야겠죠? -> 왼쪽으로 쭉 내려가면서 스택에 넣고 널 만나면 그게 제일 먼저 출력되어야 하는 노드 -> 그 노드 팝 하고 출력 [20 , 15, 10] ->  10 , [20, 15]
+	3. 현재 마지막 노드 오른쪽 노드 스택에 넣고 팝 하고 프린트 [20, 15, 18] -> 10 18 [20, 15]
+	4. 현재 마지막 노드의 왼 오 널이면 팝하고 출력, 널 아니면 오른쪽부터 추가 -> [20,15] -> 10 18 15 [20]
+	5. 4번로직 -> 현재 마지막 노드에서 왼 오 널 아니니깐 오른쪽 노드 추가 -> 10 18 15 [20, 50]
+	6. 현재 마지막 노드의 왼쪽, 오른쪽이 널 아니니깐 오른쪽 왼쪽 순서로 스택에 추가 -> 10 18 15 [20, 50, 80, 25]
+	7. 4 반복 -> 언제까지? stack이 빌때까지.
+*/
+// void postOrderIterativeS1(BSTNode *root)
+// {
+// 	 /* add your code here */
+// 	 Stack stack;
+// 	 stack.top = NULL;
+// 	 if (root == NULL) return;
+// 	 BSTNode *curNode = root ;
+// 	 while (curNode != NULL) {
+// 	  push(&stack, curNode);
+// 		curNode = curNode -> left;
+// 	 }
+// 	 curNode = pop(&stack);
+// 	 printf("%d ", curNode->item); // 지금 루트만 뽑아지고 출력됨 -> 스택엔 [20, 15] 남아있음
+// 	 while(curNode != NULL || !isEmpty(&stack)) {
+// 		curNode = curNode -> right;
+// 		if (curNode-> left != NULL || curNode -> right != NULL) {
+// 			push(&stack, curNode -> right);
+// 			push(&stack, curNode-> left) ;
+// 			if (curNode -> left != NULL) {
+// 				pop(&stack);
+// 				printf("%d ", curNode -> item);
+// 			} else {
+// 				continue;
+// 			}
+// 			if (curNode -> right != NULL) {
+// 				pop(&stack);
+// 				printf("%d ", curNode->item);
+// 			} else {
+// 				continue;
+// 			}
+// 		}
+// 	 }
+// }
 
-void postOrderIterativeS1(BSTNode *root)
+void postOrderIterativeS1(BSTNode *root) 
 {
-	 /* add your code here */
+	/* add your code here */
+	Stack stack;
+	stack.top = NULL ;
+
+	if(root == NULL) return;
+
+	BSTNode *curNode = root;
+	BSTNode *lastvisited = NULL;
+
+	while(curNode != NULL || !isEmpty(&stack)) {
+		// 왼쪽으로 쭉 내려가면서 스택에 쌓음
+		while(curNode != NULL) {
+			push(&stack, curNode);
+			curNode = curNode -> left;
+		}
+		BSTNode *peekNode = peek(&stack);
+		
+		if (peekNode -> right != NULL && peekNode -> right != lastvisited) {
+			curNode = peekNode -> right;
+		} else {
+			pop(&stack);
+			printf("%d ", peekNode -> item);
+			lastvisited = peekNode;
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

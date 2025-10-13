@@ -87,10 +87,37 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+/*
+	문제에서 원하는 것
+	이진 탐색 트리 중위 순회 방식 순회 -> 스택 사용해야함
+*/
+/*
+	문제 로직 생각
+	1. 우선 스택 만들고
+	2. 초기화
+*/
 void inOrderTraversal(BSTNode *root)
 {
 	 /* add your code here */
+	if (root == NULL) return ;
+	// 스택 만들어주고 초기화	
+	Stack stack;
+	stack.top = NULL;
+	 
+	BSTNode *curNode = root;
+	// 우선 계속 왼쪽으로 내려가면서 curNode -> left = NULL 이면 그게 제일 왼쪽 (시작점) 임.
+	while (!isEmpty(&stack) || curNode != NULL) {
+		// 계속 왼쪽으로 내려가면서 스택에 푸시 
+		while (curNode != NULL) {
+			push(&stack, curNode);
+			curNode = curNode -> left;
+		}
+		// 왼쪽 도착했으면 팝하고 출력 
+		curNode = pop(&stack);
+		printf("%d ", curNode->item);
+
+		curNode = curNode -> right;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
