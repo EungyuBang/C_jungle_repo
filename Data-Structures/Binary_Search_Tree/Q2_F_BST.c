@@ -95,6 +95,8 @@ int main()
 	문제 로직 생각
 	1. 우선 스택 만들고
 	2. 초기화
+	
+	- 오른쪽 널 처리 어케할거임?
 */
 void inOrderTraversal(BSTNode *root)
 {
@@ -112,7 +114,6 @@ void inOrderTraversal(BSTNode *root)
 			push(&stack, curNode);
 			curNode = curNode -> left;
 		}
-		// 왼쪽 도착했으면 팝하고 출력 
 		curNode = pop(&stack);
 		printf("%d ", curNode->item);
 

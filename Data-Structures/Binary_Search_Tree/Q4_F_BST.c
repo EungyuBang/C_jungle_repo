@@ -102,39 +102,39 @@ int main()
 	6. 현재 마지막 노드의 왼쪽, 오른쪽이 널 아니니깐 오른쪽 왼쪽 순서로 스택에 추가 -> 10 18 15 [20, 50, 80, 25]
 	7. 4 반복 -> 언제까지? stack이 빌때까지.
 */
-// void postOrderIterativeS1(BSTNode *root)
-// {
+void postOrderIterativeS1(BSTNode *root)
+{
 // 	 /* add your code here */
-// 	 Stack stack;
-// 	 stack.top = NULL;
-// 	 if (root == NULL) return;
-// 	 BSTNode *curNode = root ;
-// 	 while (curNode != NULL) {
-// 	  push(&stack, curNode);
-// 		curNode = curNode -> left;
-// 	 }
-// 	 curNode = pop(&stack);
-// 	 printf("%d ", curNode->item); // 지금 루트만 뽑아지고 출력됨 -> 스택엔 [20, 15] 남아있음
-// 	 while(curNode != NULL || !isEmpty(&stack)) {
-// 		curNode = curNode -> right;
-// 		if (curNode-> left != NULL || curNode -> right != NULL) {
-// 			push(&stack, curNode -> right);
-// 			push(&stack, curNode-> left) ;
-// 			if (curNode -> left != NULL) {
-// 				pop(&stack);
-// 				printf("%d ", curNode -> item);
-// 			} else {
-// 				continue;
-// 			}
-// 			if (curNode -> right != NULL) {
-// 				pop(&stack);
-// 				printf("%d ", curNode->item);
-// 			} else {
-// 				continue;
-// 			}
-// 		}
-// 	 }
-// }
+	 Stack stack;
+	 stack.top = NULL;
+	 if (root == NULL) return;
+	 BSTNode *curNode = root ;
+	 while (curNode != NULL) {
+	  push(&stack, curNode);
+		curNode = curNode -> left;
+	 }
+	 curNode = pop(&stack);
+	 printf("%d ", curNode->item); // 지금 루트만 뽑아지고 출력됨 -> 스택엔 [20, 15] 남아있음
+	 while(curNode != NULL || !isEmpty(&stack)) {
+		curNode = curNode -> right;
+		if (curNode-> left != NULL || curNode -> right != NULL) {
+			push(&stack, curNode -> right);
+			push(&stack, curNode-> left) ;
+			if (curNode -> left != NULL) {
+				pop(&stack);
+				printf("%d ", curNode -> item);
+			} else {
+				continue;
+			}
+			if (curNode -> right != NULL) {
+				pop(&stack);
+				printf("%d ", curNode->item);
+			} else {
+				continue;
+			}
+		}
+	 }
+}
 
 void postOrderIterativeS1(BSTNode *root) 
 {
