@@ -104,12 +104,11 @@ int main()
 /*
     문제 로직 생각
     1. 비어있을때 처리
-    2. node -> item -> left == NULL || node -> item -> right == NULL 이 참이면 음 하나만 있을때 또는 둘 다 있을때도 참이 되어버리네? 그럼 ^ 연산자 써야하나?
+    2. node -> left == NULL || node -> right == NULL 이 참이면 음 하나만 있을때 또는 둘 다 있을때도 참이 되어버리네? 그럼 ^ 연산자 써야하나?
     3. node -> left == NULL ^ node -> right == NULL 이렇게?  
     4. 그래서 재귀로 처리해서 참이면 cnt ++ ? 
 */
 int countOneChildNodes(BTNode *node)
-
 {
     /* add your code here */
     // 트리가 비어있을때 처리 (종료 조건)
@@ -125,6 +124,41 @@ int countOneChildNodes(BTNode *node)
     return cnt + countOneChildNodes(node -> left) + countOneChildNodes(node -> right);
 }
 
+
+int countOneChildNodes(BTNode *node) 
+{
+    if (node == NULL) {
+        return 0;
+    }
+    int count = 0;
+    if ((node->left == NULL && node->right != NULL) || (node->left != NULL && node->right == NULL)) {
+        count++;
+    }
+    return count + countOneChildNodes(node->left) + countOneChildNodes(node->right);
+}
+
+
+
+int countOneChildNodes(BTNode *node)
+{
+    if(node == NULL) return 0;
+
+    int count = 0;
+    // 왼쪽이 비어있고 
+    if (node -> left == NULL) {
+        // 오른쪽이 비어있지 않으니까 count++
+        if(node -> right != NULL) {
+            count++;
+        }
+    // 왼쪽이 비어있지 않고
+    } else {
+        // 오른쪽이 비어있으니까 count++
+        if(node -> right == NULL) {
+            count++;
+        }
+    }
+    return count + countOneChildNodes(node -> left) + countOneChildNodes(node -> right);
+}
 ///////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)

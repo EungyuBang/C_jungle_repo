@@ -113,7 +113,7 @@ int maxHeight(BTNode *node)
     // 재귀적으로 좌우 서브트리중 가장 큰 높이 구하기
     int leftMaxHeight = maxHeight(node -> left);
     int rightMaxHeight = maxHeight(node -> right);
-    // 좌 우 서브트리 가장 큰 값 들어왔으니까 둘이 비교 해서 더 큰 값에 + 1
+    // 좌 우 서브트리 가장 큰 값 들어왔으니까 둘이 비교 해서 더 큰 값에 + 
     if (leftMaxHeight > rightMaxHeight) {
         return leftMaxHeight + 1;
     } 
@@ -122,9 +122,7 @@ int maxHeight(BTNode *node)
     }
     // gpt    
     // return (leftMaxHeight > rightMaxHeight ? leftMaxHeight : rightMaxHeight) + 1;
-
 }
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item){

@@ -130,7 +130,6 @@ int hasGreatGrandchild(BTNode *node)
     } else {
         curDepth = rightDepth + 1;
     }
-
     if (curDepth >= 3) {
         printf("%d\n", node->item);
     }
